@@ -1,54 +1,70 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
-    
-    const campoCPF = document.querySelector("#cpf");
-    const regex = /^\d+$/;
-    campoCPF.addEventListener("input", (e) => {
-        if(!regex.test(campoCPF.value.slice(-1))){
-            campoCPF.value = campoCPF.value.slice(0, -1);
-        }
-        
-        if(campoCPF.value === 3){
-            console.log("if do ponto")
-            campoCPF.value += "."
-        }
-    });
+	const campoCPF = document.querySelector("#cpf");
+	campoCPF.addEventListener("input", () => {
+		let numeros = campoCPF.value.replace(/\D/g, "");
+		numeros = numeros.length > 11 ? numeros.slice(0, 11) : numeros;
 
-    // tratamento do formulário
-    document.querySelector("form").addEventListener("submit", event => { 
-        
-        let dadosEndereco = [];
-        let dadosPessoais = [];
-        let controller = true;
-        let dataBoxes = document.querySelectorAll("input");
+		if (numeros.length > 9) {
+			numeros = numeros.replace(
+				/(\d{3})(\d{3})(\d{3})(\d{1,2})/,
+				"$1.$2.$3-$4"
+			);
+		} else if (numeros.length > 6) {
+			numeros = numeros.replace(/(\d{3})(\d{3})(\d{3})/, "$1.$2.$3-");
+		} else if (numeros.length > 3) {
+			numeros = numeros.replace(/(\d{3})(\d{3})/, "$1.$2.");
+		} else if (numeros.length > 0) {
+			numeros = numeros.replace(/(\d{3})/, "$1.");
+		}
+		campoCPF.value = numeros;
+	});
 
-        dataBoxes.forEach(element => {
-            if(element.value === "" || element.value === " ")
-                {
-                    controller = false;
-                }
-            });
-            if(controller === false){
-                event.preventDefault();
-                alert("Preencha todos os campos para continuar");
-            
-                
-            } 
-            else{
-                
-                console.log("Todos os dados estão corretos");
-                dataBoxes.forEach(element => {
-                    if (element.parentElement.parentElement.id === "dados-pessoais"){
-                        dadosPessoais.push(element.value);
-                        console.log(dadosPessoais);
-                    }
-                    if (element.parentElement.parentElement.id === "endereco"){
-                        dadosEndereco.push(element.value);
-                        console.log(dadosEndereco);
-                    }
-                    localStorage.setItem("Dados Pessoais", dadosPessoais);
-                    localStorage.setItem("Endereço", dadosEndereco);
-                });
-            }
-        });
-    });
+	// tratamento do formulário
+	let dataBoxes = document.querySelectorAll("input");
+	document.querySelector("form").addEventListener("submit", (event) => {
+		let dadosEndereco = [];
+		let dadosPessoais = [];
+		let controller = true;
+		dataBoxes.forEach((element) => {
+			if (element.value === "" || element.value === " ") {
+				controller = false;
+			}
+		});
+		if (controller === false) {
+			event.preventDefault();
+			alert("Preencha todos os campos para continuar");
+		} else {
+			console.log("Todos os dados estão corretos");
+			dataBoxes.forEach((element) => {
+				if (element.value.includes(".") || element.value.includes("-")) {
+					element.value = element.value.replaceAll(".", "");
+					element.value = element.value.replaceAll("-", "");
+				}
+
+				if (element.parentElement.parentElement.id === "dados-pessoais") {
+					dadosPessoais.push(element.value);
+					console.log(dadosPessoais);
+				}
+				if (element.parentElement.parentElement.id === "endereco") {
+					dadosEndereco.push(element.value);
+					console.log(dadosEndereco);
+				}
+				localStorage.setItem("Dados Pessoais", dadosPessoais);
+				localStorage.setItem("Endereço", dadosEndereco);
+			});
+		}
+	});
+	dataBoxes.forEach((box) => {
+		let contentBoxStyle = box.parentElement.parentElement.style;
+		box.addEventListener("focus", () => {
+			box.labels[0].style.fontWeight = "bold";
+			contentBoxStyle.boxShadow =
+				"3px 3px 4px #ffffff38, -3px -3px 4px #ffffff38";
+			contentBoxStyle.transition = "0.3s all";
+		});
+		box.addEventListener("blur", () => {
+			box.labels[0].style.fontWeight = "400";
+			contentBoxStyle.boxShadow = "none";
+		});
+	});
+});
