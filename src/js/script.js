@@ -1,4 +1,42 @@
 document.addEventListener("DOMContentLoaded", () => {
+	// tratamento do formulário
+	document.querySelector("form").addEventListener("submit", (event) => {
+		event.preventDefault();
+		let dadosEndereco = [];
+		let dadosPessoais = [];
+		let controller = true;
+		let dataBoxes = document.querySelectorAll("input");
+		for (let i = 0; i < dataBoxes.length; i++) {
+			let element = dataBoxes[i];
+			if (element.value.trim() === "") {
+				alert("Preencha todos os campos para continuar");
+				event.preventDefault();
+				controller = false;
+				break;
+			}
+		}
+		if (controller === true) {
+			console.log("Todos os dados estão corretos");
+
+			if (element.value.includes(".") || element.value.includes("-")) {
+				element.value = element.value.replaceAll(".", "");
+				element.value = element.value.replaceAll("-", "");
+			}
+
+			dataBoxes.forEach((element) => {
+				if (element.parentElement.parentElement.id === "dados-pessoais") {
+					dadosPessoais.push(element.value);
+					console.log(dadosPessoais);
+				}
+				if (element.parentElement.parentElement.id === "endereco") {
+					dadosEndereco.push(element.value);
+					console.log(dadosEndereco);
+				}
+			});
+			localStorage.setItem("Dados Pessoais", dadosPessoais);
+			localStorage.setItem("Endereço", dadosEndereco);
+		}
+	});
 	const campoCPF = document.querySelector("#cpf");
 	campoCPF.addEventListener("input", () => {
 		let numeros = campoCPF.value.replace(/\D/g, "");
@@ -17,42 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			numeros = numeros.replace(/(\d{3})/, "$1.");
 		}
 		campoCPF.value = numeros;
-	});
-
-	// tratamento do formulário
-	let dataBoxes = document.querySelectorAll("input");
-	document.querySelector("form").addEventListener("submit", (event) => {
-		let dadosEndereco = [];
-		let dadosPessoais = [];
-		let controller = true;
-		dataBoxes.forEach((element) => {
-			if (element.value === "" || element.value === " ") {
-				controller = false;
-			}
-		});
-		if (controller === false) {
-			event.preventDefault();
-			alert("Preencha todos os campos para continuar");
-		} else {
-			console.log("Todos os dados estão corretos");
-			dataBoxes.forEach((element) => {
-				if (element.value.includes(".") || element.value.includes("-")) {
-					element.value = element.value.replaceAll(".", "");
-					element.value = element.value.replaceAll("-", "");
-				}
-
-				if (element.parentElement.parentElement.id === "dados-pessoais") {
-					dadosPessoais.push(element.value);
-					console.log(dadosPessoais);
-				}
-				if (element.parentElement.parentElement.id === "endereco") {
-					dadosEndereco.push(element.value);
-					console.log(dadosEndereco);
-				}
-				localStorage.setItem("Dados Pessoais", dadosPessoais);
-				localStorage.setItem("Endereço", dadosEndereco);
-			});
-		}
 	});
 	dataBoxes.forEach((box) => {
 		let contentBoxStyle = box.parentElement.parentElement.style;
