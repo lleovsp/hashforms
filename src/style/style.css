@@ -1,6 +1,11 @@
 :root {
-	--bg-color: #161638;
+	--bg-color-form: #181855;
 	--input-color: #313137;
+	--words-title-color: #f1a415;
+	--bg-color-body:  #161638;
+	--word-color: white;
+	--btt-color: #198754;
+	--bbt-color-hover: #157347;
 }
 * {
 	padding: 0;
@@ -18,85 +23,128 @@
 		flex-wrap: wrap;
 	}
 }
+.title-padding{
+	padding: 1rem 0rem;
+}
 .orange {
-	color: #f1a415;
+	color: var(--words-title-color);
+
+}
+.bold{
 	font-weight: bold;
 }
 body {
-	background-color: #181855;
+	background-color: var(--bg-color-body);
 	padding: 2rem;
 }
-form {
-	position: relative;
-	gap: 2rem;
-	& .titulo {
-		& h3 {
-			font-size: 2.4rem;
-		}
-		& p {
-			color: white;
-			font-size: 1.2rem;
-			font-weight: bold;
-			text-decoration: underline;
-			text-decoration-line: underline;
-		}
-	}
-	& .conjunto-de-dados {
-		color: white;
-		font-size: 2.4rem;
-		background-color: var(--bg-color);
-		padding: 1rem;
-		gap: 1.2rem;
-		width: 60rem;
-		justify-content: space-around;
-		align-items: start;
-		border-radius: 5px;
-		border: 1.5px solid rgba(255, 255, 255, 0.171);
+main{
+	align-items: center;
+	justify-content: center;
+	gap: 1.2rem;
+	padding-top: 1rem;
+	
+	& form {
+		background-color: var(--bg-color-form);
+		position: relative;
+		gap: 2rem;
+		padding: 2.4rem;
+		border-radius: 10px;
 		& .titulo {
-			position: absolute;
-			transform: translateY(-6.7rem);
-			&.dois {
-				transform: translateY(-14.7rem);
-			}
-		}
-		& input {
-			border-radius: 3px;
-			width: 45.659rem;
-			height: 2.7rem;
-			background-color: #313137;
-			border: 0.5px solid gray;
-			color: white;
-			padding-left: 0.8rem;
-			&:focus {
-				outline: none;
-				border: 2px solid gray;
-			}
-		}
-		& div {
-			font-size: 2.4rem;
-			align-items: center;
-			& div {
+			& div{
 				align-items: center;
-				justify-content: center;
-				width: 12.341rem;
+				& #avatar-icon{
+					padding: 0;
+					margin: 0;
+					border: 0;
+					height: 2.8rem;
+					width: 4rem;
+				}
+				& h3 {
+					font-size: 2.4rem;
+				}
+			}
+			& p {
+				color: var(--word-color);
+				font-size: 1.2rem;
+				font-weight: bold;
+				text-decoration: underline;
+				text-decoration-line: underline;
+			}
+		}
+		& .conjunto-de-dados {
+			color: var(--word-color);
+			font-size: 2.4rem;
+			background-color: var(--bg-color-form);
+			padding: 1rem;
+			gap: 1.2rem;
+			width: 60rem;
+			justify-content: space-around;
+			align-items: start;
+			border-radius: 5px;
+			border: 1.5px solid rgba(255, 255, 255, 0.171);
+			& .titulo {
+				position: absolute;
+				transform: translateY(-6.7rem);
+				&.dois {
+					transform: translateY(-14.7rem);
+				}
+			}
+			& input {
+				border-radius: 3px;
+				width: 45.659rem;
+				height: 2.7rem;
+				background-color: var(--input-color);
+				border: 0.5px solid gray;
+				color: var(--word-color);
+				padding-left: 0.8rem;
+				&:focus {
+					outline: none;
+					border: 2px solid var(--words-title-color);
+				}
+			}
+			& div {
+				font-size: 2.4rem;
+				align-items: center;
+				& div {
+					align-items: center;
+					justify-content: center;
+					width: 12.341rem;
+				}
+			}
+		}
+		& button.conjunto-de-dados {
+			cursor: pointer;
+			justify-content: center;
+			align-items: center;
+			color: white;
+			background-color: var(--btt-color);
+			border: none;
+			border-radius: 5px;
+			height: 4rem;
+			box-shadow: 2px 2px 4px 1px #ffffff38;
+			transition: all 0.3s;
+			&:hover {
+				background-color: var(--bbt-color-hover);
+				box-shadow: -2px -2px 4px 1px rgba(255, 255, 255, 0.562);
+				transform: translate(2px, 2px);
 			}
 		}
 	}
-	& button.conjunto-de-dados {
-		cursor: pointer;
-		justify-content: center;
-		align-items: center;
-		color: white;
-		background-color: green;
-		border: none;
-		border-radius: 5px;
-		height: 4rem;
-		box-shadow: 2px 2px 4px 1px #ffffff38;
-		transition: all 0.3s;
-		&:hover {
-			background-color: rgb(4, 82, 4);
-			box-shadow: -2px -2px 4px 1px rgba(255, 255, 255, 0.562);
-			transform: translate(2px, 2px);
+	& aside{
+		font-size: 2.4rem;
+		width: 30rem;
+		background-color: var(--bg-color-form);
+		color: var(--word-color);
+		& div{
+			& p, svg{
+				font-size: 1.8rem;
+			}
 		}
 	}
+}
+
+/* provisório */
+img{
+	width: 2rem;
+	height: 2rem;
 }
