@@ -57,16 +57,18 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	dataBoxes.forEach((box) => {
-		let contentBoxStyle = box.parentElement.parentElement.style;
+		let contentBox = box.parentElement.parentElement;
 		box.addEventListener("focus", () => {
+		 contentBox.children[0].style.fontWeight = "bold"
 			box.labels[0].style.fontWeight = "bold";
-			contentBoxStyle.boxShadow =
-				"3px 3px 4px #ffffff38, -3px -3px 4px #ffffff38";
-			contentBoxStyle.transition = "0.3s all";
+		 contentBox.style.boxShadow =
+				"3px 3px 4px #ffffff38, -3px -3px 4px #ffffff38, 3px -3px 4px #ffffff38, -3px 3px 4px #ffffff38";
+		 contentBox.style.transition = "0.3s all";
 		});
 		box.addEventListener("blur", () => {
+			contentBox.children[0].style.fontWeight = "400";
 			box.labels[0].style.fontWeight = "400";
-			contentBoxStyle.boxShadow = "none";
+		 	contentBox.style.boxShadow = "none";
 		});
 	});
 });
