@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-	// tratamento do formulário
+	// submit formulário
+	let dataBoxes = document.querySelectorAll("input");
 	document.querySelector("form").addEventListener("submit", (event) => {
 		event.preventDefault();
 		let dadosEndereco = [];
 		let dadosPessoais = [];
 		let controller = true;
-		let dataBoxes = document.querySelectorAll("input");
 		for (let i = 0; i < dataBoxes.length; i++) {
 			let element = dataBoxes[i];
 			if (element.value.trim() === "") {
@@ -17,13 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 		if (controller === true) {
 			console.log("Todos os dados estão corretos");
-
-			if (element.value.includes(".") || element.value.includes("-")) {
-				element.value = element.value.replaceAll(".", "");
-				element.value = element.value.replaceAll("-", "");
-			}
-
 			dataBoxes.forEach((element) => {
+				if (element.value.includes(".") || element.value.includes("-")) {
+					element.value = element.value.replaceAll(".", "");
+					element.value = element.value.replaceAll("-", "");
+				}
 				if (element.parentElement.parentElement.id === "dados-pessoais") {
 					dadosPessoais.push(element.value);
 					console.log(dadosPessoais);
@@ -37,11 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
 			localStorage.setItem("Endereço", dadosEndereco);
 		}
 	});
+
+	// eventos de campos
 	const campoCPF = document.querySelector("#cpf");
 	campoCPF.addEventListener("input", () => {
 		let numeros = campoCPF.value.replace(/\D/g, "");
 		numeros = numeros.length > 11 ? numeros.slice(0, 11) : numeros;
-
 		if (numeros.length > 9) {
 			numeros = numeros.replace(
 				/(\d{3})(\d{3})(\d{3})(\d{1,2})/,
@@ -56,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 		campoCPF.value = numeros;
 	});
+
 	dataBoxes.forEach((box) => {
 		let contentBoxStyle = box.parentElement.parentElement.style;
 		box.addEventListener("focus", () => {
